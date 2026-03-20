@@ -933,7 +933,7 @@ def worker(region, account_name, password_prefix, total_accounts, thread_id, is_
 
 def wait_for_enter():
     print(f"\n{get_random_color()}{Colors.BRIGHT}⏎ Press Enter to continue...{Colors.RESET}")
-    input()
+    pass  # auto skip
 
 def generate_accounts_flow():
     global SUCCESS_COUNTER, TARGET_ACCOUNTS, RARE_COUNTER, COUPLES_COUNTER, RARITY_SCORE_THRESHOLD
@@ -956,7 +956,7 @@ def generate_accounts_flow():
 
     while True:
         try:
-            choice = input(f"\n{get_random_color()}{Colors.BRIGHT}🎯 Choose option: {Colors.RESET}").strip().upper()
+            choice = "1"
             
             if choice == "00":
                 return
@@ -966,7 +966,7 @@ def generate_accounts_flow():
             elif choice.isdigit():
                 choice_num = int(choice)
                 if 1 <= choice_num <= len(regions_to_show):
-                    selected_region = regions_to_show[choice_num - 1]
+                    selected_region = "IND"
                     is_ghost = False
                     break
                 elif choice_num == len(regions_to_show) + 1:
@@ -1000,7 +1000,7 @@ def generate_accounts_flow():
 
     while True:
         try:
-            account_count = int(input(f"\n{get_random_color()}{Colors.BRIGHT}🎯 Total Accounts to Generate Mixed: {Colors.RESET}"))
+            account_count = 50
             if account_count > 0:
                 break
             else:
@@ -1011,14 +1011,14 @@ def generate_accounts_flow():
             safe_exit()
 
     while True:
-        account_name = input(f"\n{get_random_color()}{Colors.BRIGHT}👤 Enter account name prefix: {Colors.RESET}").strip()
+        account_name = "Tin"
         if account_name:
             break
         else:
             print_error("Account name cannot be empty.")
 
     while True:
-        password_prefix = input(f"\n{get_random_color()}{Colors.BRIGHT}🔑 Enter password prefix: {Colors.RESET}").strip()
+        password_prefix = "Sn"
         if password_prefix:
             break
         else:
@@ -1026,7 +1026,7 @@ def generate_accounts_flow():
 
     while True:
         try:
-            rarity_threshold = int(input(f"\n{get_random_color()}{Colors.BRIGHT}⭐ Rarity Threshold Put 2: {Colors.RESET}"))
+            rarity_threshold = 2
             if 1 <= rarity_threshold <= 10:
                 RARITY_SCORE_THRESHOLD = rarity_threshold
                 break
@@ -1039,7 +1039,7 @@ def generate_accounts_flow():
 
     while True:
         try:
-            thread_count = int(input(f"\n{get_random_color()}{Colors.BRIGHT}🧵 Speed/Thread Count : Put less than 5 Jitna km Utna IP BAN KM (Recommended: {recommended_threads}): {Colors.RESET}"))
+            thread_count = 2
             if thread_count > 0:
                 break
             else:
@@ -1197,7 +1197,7 @@ def main_menu():
         print(f"{get_random_color()}0) {Fore.RED}Exit{Colors.RESET}")
 
         try:
-            choice = input(f"\n{get_random_color()}{Colors.BRIGHT}🎯 Choose option: {Colors.RESET}").strip()
+            choice = "1"
             
             if choice == "1":
                 generate_accounts_flow()
