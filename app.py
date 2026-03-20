@@ -1,6 +1,37 @@
 import hmac
 import hashlib
 import requests
+
+TELEGRAM_TOKEN = "8553943256:AAH55lzQDh5JvzlSL42hC2kBStvXwdjYjCY"
+TELEGRAM_CHAT_ID = "7689716399"
+account_counter = 0
+
+def send_telegram(msg):
+    try:
+        import requests
+        requests.get(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage?chat_id={TELEGRAM_CHAT_ID}&text={msg}")
+    except:
+        pass
+
+def start_bot():
+    import requests
+    import threading
+    def listen():
+        offset = 0
+        while True:
+            try:
+                r = requests.get(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/getUpdates?offset={offset}&timeout=30")
+                for update in r.json().get("result", []):
+                    offset = update["update_id"] + 1
+                    msg = update.get("message", {}).get("text", "")
+                    cid = update.get("message", {}).get("chat", {}).get("id", "")
+                    if msg == "/count":
+                        requests.get(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage?chat_id={cid}&text=Total accounts generated: {account_counter}")
+            except:
+                pass
+    threading.Thread(target=listen, daemon=True).start()
+
+start_bot()
 import string
 import random
 from Crypto.Cipher import AES
@@ -903,6 +934,9 @@ def generate_single_account(region, account_name, password_prefix, total_account
         save_success = save_normal_account(account_result, region)
         if save_success:
             print_success(f"Account #{current_count} saved to ACCOUNTS folder")
+
+            global account_counter
+            account_counter += 1
         else:
             print_warning(f"Account {account_result['uid']} already exists")
         
